@@ -37,7 +37,6 @@ export const registerUser = async (req, res) => {
       `,
       [name, email, hashed, address, role]
     );
-    console.log(result);
     res.json({ message: "User registered successfully", user: result.rows[0] });
   } catch (error) {
     console.log(error);
@@ -76,3 +75,8 @@ export const loginUser = async (req, res) => {
     res.status(500).json({ message: error.message || "Internal Server Error" });
   }
 };
+
+export const logoutUser = async (req, res) =>{
+  res.clearCookie("token");
+  res.json({message: "Logged out successfully"})
+}
