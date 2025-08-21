@@ -31,7 +31,6 @@ export const registerUser = async (req, res) => {
       });
     }
     const hashed = await hashPassword(password);
-    console.log(hashed);
     const result = await pool.query(
       `INSERT INTO users (name, email, password, address, role) 
       VALUES ($1, $2, $3, $4, $5)
@@ -41,7 +40,6 @@ export const registerUser = async (req, res) => {
     );
     res.json({ message: "User registered successfully", user: result.rows[0] });
   } catch (error) {
-    console.log(error);
     res.status(400).json({ message: error.message });
   }
 };
@@ -100,7 +98,6 @@ export const updatePassword = async (req, res) => {
       "UPDATE users SET password = $1 WHERE id = $2;",
       [hashedPassword, id]
     );
-    console.log(result)
     if (result.rowCount === 0) {
       return res.status(404).json({ message: "User not found" });
     }

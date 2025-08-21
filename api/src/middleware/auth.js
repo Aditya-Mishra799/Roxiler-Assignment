@@ -8,17 +8,14 @@ export const authenticate = async (req, res, next) => {
   if (!token) return res.status(401).json({ message: "No token provided" });
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    console.log(decoded)
     const result = await pool.query("SELECT name, email, id, role  FROM users WHERE id = $1 AND role = $2;", [decoded.id, decoded.role])
     const user = result.rows[0];
-    console.log(user.email)
     if (!user) {
       return res.status(401).json({ message: "User no longer exists" });
     }
     req.user = user; 
     next();
   } catch (error) {
-    console.log(error)
     return res
       .status(403)
       .json({ message: "Invalid token, please try again !!!" });
