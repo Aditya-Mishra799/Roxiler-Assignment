@@ -2,16 +2,18 @@ import express from "express";
 import jwt from "jsonwebtoken";
 import { comparePassword, hashPassword } from "../utlis/hash.js";
 import pool from "../config/db.js";
-import { z } from "zod";
-import { userSchema } from "../validation_schema/userValidation.js";
+import {
+  passwordSchema,
+  userSchema,
+} from "../validation_schema/userValidation.js";
 
 const ROLE = "user"; // asuming default role for self register
 export const registerUser = async (req, res) => {
-  const result = z.safeParse(userSchema, req.body);
+  const result = userSchema.safeParse(req.body);
   if (!result.success) {
     return res
       .status(400)
-      .json({ message: "Invalid Data", details: result.error });
+      .json({ message: "Invalid Data", details: result.error.errors.map(error => error.message) });
   }
   let { name, email, password, address, role } = req.body;
   if (!req.user || req.user.role !== "admin") {
@@ -76,7 +78,34 @@ export const loginUser = async (req, res) => {
   }
 };
 
-export const logoutUser = async (req, res) =>{
+export const logoutUser = async (req, res) => {
   res.clearCookie("token");
-  res.json({message: "Logged out successfully"})
-}
+  res.json({ message: "Logged out successfully" });
+};
+
+export const updatePassword = async (req, res) => {
+  const id = req.user.id;
+  const validationResult = passwordSchema.safeParse(req.body.password);
+  if (!validationResult.success) {
+    return res
+      .status(400)
+      .json({
+        message: "Invalid password, must follow specified rules",
+        details: validationResult.error.errors.map(err => err.message),
+      });
+  }
+  try {
+    const hashedPassword = await hashPassword(req.body.password);
+    const result = await pool.query(
+      "UPDATE users SET password = $1 WHERE id = $2;",
+      [hashedPassword, id]
+    );
+    console.log(result)
+    if (result.rowCount === 0) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.status(200).json({ message: "Password updated successfully" });
+  } catch (error) {
+    res.status(500).json({ message: error.message || "Internal Server Error" });
+  }
+};
