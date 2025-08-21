@@ -1,0 +1,17 @@
+services:
+  db:
+    image: postgres:17
+    container_name: postgres
+    environment:
+      - POSTGRES_DB=ratings_app_db
+      - POSTGRES_USER=roxiler
+      - POSTGRES_PASSWORD=roxiler
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./db/initiate_db.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    
+volumes:
+  postgres_data:
