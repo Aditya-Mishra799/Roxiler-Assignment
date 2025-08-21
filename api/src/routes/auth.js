@@ -4,8 +4,8 @@ import { authenticate } from "../middleware/auth.js";
 
 const router = express.Router();
 
-router.post('/auth/register', registerUser)
-router.post('/auth/login', loginUser)
-router.post('/auth/logout', logoutUser)
-router.post('/auth/update-password', authenticate, updatePassword)
+router.post('/register', registerUser)
+router.post('/login', loginUser)
+router.post('/logout', logoutUser)
+router.post('/update-password', authenticate, updatePassword)
 export default router

@@ -1,4 +1,3 @@
-import express from "express";
 import jwt from "jsonwebtoken";
 import { comparePassword, hashPassword } from "../utlis/hash.js";
 import pool from "../config/db.js";
@@ -7,7 +6,6 @@ import {
   userSchema,
 } from "../validation_schema/userValidation.js";
 
-const ROLE = "user"; // asuming default role for self register
 export const registerUser = async (req, res) => {
   const result = userSchema.safeParse(req.body);
   if (!result.success) {
@@ -34,7 +32,7 @@ export const registerUser = async (req, res) => {
     const result = await pool.query(
       `INSERT INTO users (name, email, password, address, role) 
       VALUES ($1, $2, $3, $4, $5)
-      RETURNING email, name, role;
+      RETURNING email, name, role, id;
       `,
       [name, email, hashed, address, role]
     );

@@ -61,3 +61,13 @@ CREATE TRIGGER update_ratings_time
 BEFORE UPDATE ON ratings
 FOR EACH ROW
 EXECUTE FUNCTION update_timestamp();
+
+-- adding a default admin user, PASSWORD = Roxiler@123
+INSERT INTO users (name, email, address, password, role) 
+VALUES (
+  'Roxiler', 
+  'roxiler@roxiler.com', 
+  'Room 1234, Plot 567, Maharashtra', 
+  '$2b$10$hgF.E5GMZLc6hwq6Z46hb.4758PejWbSCH6mDoVytzbo3pNUzoN02', 
+  'admin'
+);
