@@ -65,7 +65,7 @@ export const loginUser = async (req, res) => {
     );
     res.cookie("token", token, {
       httpOnly: true,
-      ameSite: "strict",
+      sameSite: "lax",
       maxAge: 24 * 60 * 60 * 1000,
     });
     return res.json({ message: "Login successful" });
@@ -104,3 +104,7 @@ export const updatePassword = async (req, res) => {
     res.status(500).json({ message: error.message || "Internal Server Error" });
   }
 };
+
+export const getUserDeatils = async (req, res)=>{
+  return res.json(req.user)
+}

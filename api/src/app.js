@@ -4,11 +4,16 @@ import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import authRouter from "./routes/auth.js";
 import adminRouter from "./routes/admin.js";
-import storeRouter from "./routes/stores.js"
+import storeRouter from "./routes/stores.js";
 import { authenticate, authorize } from "./middleware/auth.js";
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.FRONTEND_ORIGIN,
+    credentials: true,
+  })
+);
 app.use(cookieParser());
 app.use(express.json());
 app.use(morgan("dev"));
