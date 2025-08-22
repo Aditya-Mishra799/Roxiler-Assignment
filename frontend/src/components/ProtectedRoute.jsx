@@ -26,7 +26,7 @@ const ProtectedRoute = ({ roles = [], children }) => {
       <div className="access-denied-container">
         <h2>Access Denied</h2>
         <p>You do not have permission to view this page.</p>
-        <Link to="/" className="home-link">
+        <Link to="/" className="basic-link">
           Go to Home
         </Link>
       </div>

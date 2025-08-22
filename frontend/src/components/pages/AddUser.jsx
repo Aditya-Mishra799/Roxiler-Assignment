@@ -1,20 +1,22 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { userSchema } from "../../schemas/userValidation";
-import Input from "../Input"
+import { userSchema } from "../../schemas/userValidation"; // <-- your schema file
+import Input from "../Input";
 import TextArea from "../TextArea";
 import Button from "../Button";
+import "../css/Register.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import "../css/Register.css";
+import Select from "../Select";
 
-const RegisterForm = () => {
+const AddUser = () => {
   const navigate = useNavigate();
 
   const {
     control,
     handleSubmit,
     formState: { isSubmitting },
+    reset
   } = useForm({
     resolver: zodResolver(userSchema),
     defaultValues: {
@@ -29,32 +31,44 @@ const RegisterForm = () => {
   const onSubmit = async (data) => {
     try {
       const res = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/auth/register`,
-        data
+        `${import.meta.env.VITE_API_BASE_URL}/admin/add-user`,
+        data,
+        {withCredentials: true}
       );
-      alert("User registered successfully! Please login.");
-      navigate("/login");
+      alert("User added successfully!");
+      reset()
     } catch (err) {
       console.error(err);
-      alert("Failed to register. " + (err.response?.data?.message || ""));
+      alert("Failed to add user: " + (err.response?.data?.message || ""));
     }
   };
 
   return (
     <form className="register-form" onSubmit={handleSubmit(onSubmit)}>
-      <h2>Register</h2>
-
+      <h2>Add User</h2>
       <Input name="name" control={control} label="Full Name" />
       <Input name="email" control={control} label="Email" />
-      <Input name="password" control={control} label="Password" type="password" />
-
+      <Input
+        name="password"
+        control={control}
+        label="Password"
+        type="password"
+      />
+      <Select
+        name="role"
+        control={control}
+        label="Role"
+        options={[
+          { label: "Admin", value: "admin" },
+          { label: "User", value: "user" },
+        ]}
+      />
       <TextArea name="address" control={control} label="Address" rows={4} />
-
-      <Button type="submit"  disabled={isSubmitting}>
-        {isSubmitting ? "Submitting..." : "Register"}
+      <Button type="submit" disabled={isSubmitting}>
+        {isSubmitting ? "Submitting..." : "Add User"}
       </Button>
     </form>
   );
 };
 
-export default RegisterForm;
+export default AddUser;

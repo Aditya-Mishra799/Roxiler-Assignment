@@ -25,7 +25,7 @@
     margin-bottom: 20px;
   }
   
-  .home-link {
+  .basic-link {
     display: inline-block;
     padding: 10px 20px;
     background-color: rgb(17, 175, 207);
@@ -35,7 +35,7 @@
     transition: background-color 0.3s;
   }
   
-  .home-link:hover {
+  .basic-link:hover {
     background-color: rgb(10, 140, 170);
   }
   

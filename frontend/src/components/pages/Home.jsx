@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import "../css/Home.css";
 
@@ -27,6 +28,9 @@ const Home = () => {
           <strong>Joined At:</strong>{" "}
           {new Date(user.created_at).toLocaleDateString("en-IN")}
         </p>
+        <Link to="/update-password" className="basic-link">
+          Update Password
+        </Link>
       </div>
     </div>
   );
