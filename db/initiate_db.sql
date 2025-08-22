@@ -17,7 +17,7 @@ CREATE TABLE stores(
     name VARCHAR(60) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     address VARCHAR(400) NOT NULL,
-    owner_id INTEGER UNIQUE REFERENCES users(id) ON DELETE CASCADE,
+    owner_id INTEGER UNIQUE NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     average_rating DECIMAL(3,2) DEFAULT 0,
     rating_count INT DEFAULT 0,
     total_rating INT DEFAULT 0,      
