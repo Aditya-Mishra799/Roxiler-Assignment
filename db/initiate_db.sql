@@ -18,6 +18,9 @@ CREATE TABLE stores(
     email VARCHAR(255) UNIQUE NOT NULL,
     address VARCHAR(400) NOT NULL,
     owner_id INTEGER UNIQUE REFERENCES users(id) ON DELETE CASCADE,
+    average_rating DECIMAL(3,2) DEFAULT 0,
+    rating_count INT DEFAULT 0,
+    total_rating INT DEFAULT 0,      
     created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
     updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
     CHECK(LENGTH(name) BETWEEN 5 AND 60),
@@ -39,6 +42,62 @@ CREATE INDEX idx_stores_name ON stores(name);
 CREATE INDEX idx_users_email ON users(email);
 CREATE INDEX idx_ratings_store_id ON ratings(store_id);
 
+-- trigger to update ratings
+CREATE OR REPLACE FUNCTION insert_store_ratings()
+RETURNS TRIGGER AS $$
+BEGIN
+    UPDATE stores
+    SET rating_count = rating_count + 1,
+        total_rating = total_rating + NEW.rating,
+        average_rating = ROUND( (total_rating + NEW.rating)::numeric / (rating_count + 1), 2)
+    WHERE id = NEW.store_id;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION update_store_ratings()
+RETURNS TRIGGER AS $$
+BEGIN
+    UPDATE stores
+    SET total_rating = total_rating + NEW.rating - OLD.rating,
+        average_rating = ROUND( (total_rating + NEW.rating - OLD.rating)::numeric / rating_count, 2)
+    WHERE id = NEW.store_id;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION delete_store_ratings()
+RETURNS TRIGGER AS $$
+BEGIN
+    UPDATE stores
+    SET rating_count = rating_count - 1,
+        total_rating = total_rating - OLD.rating,
+        average_rating = CASE 
+            WHEN rating_count > 1 
+            THEN ROUND( (total_rating - OLD.rating)::numeric / (rating_count - 1), 2)
+            ELSE 0
+            END
+    WHERE id = OLD.store_id;
+    RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER insert_ratings
+AFTER INSERT ON ratings
+FOR EACH ROW
+EXECUTE FUNCTION insert_store_ratings();
+
+CREATE TRIGGER update_ratings
+AFTER UPDATE ON ratings
+FOR EACH ROW
+EXECUTE FUNCTION update_store_ratings();
+
+CREATE TRIGGER delete_ratings
+AFTER DELETE ON ratings
+FOR EACH ROW
+EXECUTE FUNCTION delete_store_ratings();
+
+-- trigger for time stamp update
 CREATE OR REPLACE FUNCTION update_timestamp()
 RETURNS TRIGGER AS $$ 
 BEGIN 

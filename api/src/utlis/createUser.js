@@ -30,7 +30,7 @@ export const createUser = async(user)=>{
 
       return {
         created: true,
-        data: userInsert.rows,
+        data: userInsert.rows[0],
         message: "User Created Successfully."
       }
 
