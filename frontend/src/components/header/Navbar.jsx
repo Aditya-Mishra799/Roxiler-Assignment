@@ -9,6 +9,7 @@ import {
   SmilePlus,
   Menu,
   X,
+  StoreIcon,
 } from "lucide-react";
 import useWindowWidth from "../../assets/hooks/useWindowWidth";
 
@@ -45,6 +46,12 @@ const Navbar = () => {
       href: "/add-user",
       visible: authState.isAuthenticated && authState.user?.role === "admin",
       Icon: SmilePlus,
+    },
+    {
+      label: "Add Store",
+      href: "/add-store",
+      visible: authState.isAuthenticated && authState.user?.role === "admin",
+      Icon: StoreIcon,
     },
   ];
   const [open, setOpen] = useState(false);

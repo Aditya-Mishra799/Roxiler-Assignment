@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/header/Navbar";
+import AddStore from "./components/pages/AddStore";
 import AddUser from "./components/pages/AddUser";
 import AdminDashboard from "./components/pages/AdminDashboard";
 import Home from "./components/pages/Home";
@@ -48,6 +49,14 @@ function App() {
             element={
               <ProtectedRoute roles={["admin"]}>
                 <AddUser />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/add-store"
+            element={
+              <ProtectedRoute roles={["admin"]}>
+                <AddStore />
               </ProtectedRoute>
             }
           />
