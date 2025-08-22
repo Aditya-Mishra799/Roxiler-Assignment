@@ -14,10 +14,14 @@ export const createStore = async (req, res) => {
     });
   }
   try {
-
-    const checkStore = await pool.query(`SELECT id from stores where email = $1;`, [store.email]);
-    if(checkStore.rows[0]){
-      return res.status(409).json({message: 'A store is already registered with this email.'})
+    const checkStore = await pool.query(
+      `SELECT id from stores where email = $1;`,
+      [store.email]
+    );
+    if (checkStore.rows[0]) {
+      return res
+        .status(409)
+        .json({ message: "A store is already registered with this email." });
     }
     const { created, ...rest } = await createUser(owner);
     if (!created) {
@@ -94,7 +98,9 @@ export const fetchUsers = async (req, res) => {
       })
       .filter(Boolean)
       .join(", ");
-    const orderByClause = sortRules ? `ORDER BY ${sortRules}` : "ORDER BY created_at";
+    const orderByClause = sortRules
+      ? `ORDER BY ${sortRules}`
+      : "ORDER BY created_at";
     const offset = (parseInt(page) - 1) * limit;
     const countResult = await pool.query(
       `SELECT COUNT(*) FROM users ${whereClause};`,
@@ -117,6 +123,22 @@ export const fetchUsers = async (req, res) => {
       limit: parseInt(limit),
       totalPages: Math.ceil(total / parseInt(limit)),
       data: result.rows,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+export const getDashboardMetrics = async (req, res) => {
+  try {
+    const users = await pool.query("SELECT COUNT(*) FROM users;");
+    const stores = await pool.query("SELECT COUNT(*) FROM stores;");
+    const ratings = await pool.query("SELECT COUNT(*) FROM ratings;");
+    return res.json({
+      totalUsers: parseInt(users.rows[0].count),
+      totalStores: parseInt(stores.rows[0].count),
+      totalRatings: parseInt(ratings.rows[0].count),
     });
   } catch (error) {
     console.error(error);

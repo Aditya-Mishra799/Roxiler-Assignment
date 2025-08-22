@@ -6,12 +6,9 @@ import TextArea from "../TextArea";
 import Button from "../Button";
 import "../css/Register.css";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import Select from "../Select";
 
 const AddUser = () => {
-  const navigate = useNavigate();
-
   const {
     control,
     handleSubmit,

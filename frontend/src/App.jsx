@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/header/Navbar";
 import AddUser from "./components/pages/AddUser";
+import AdminDashboard from "./components/pages/AdminDashboard";
 import Home from "./components/pages/Home";
 import Login from "./components/pages/Login";
 import Logout from "./components/pages/Logout";
@@ -47,6 +48,14 @@ function App() {
             element={
               <ProtectedRoute roles={["admin"]}>
                 <AddUser />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute roles={["admin"]}>
+                <AdminDashboard />
               </ProtectedRoute>
             }
           />
