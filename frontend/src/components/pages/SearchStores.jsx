@@ -10,13 +10,14 @@ import { useAuth } from "../../context/AuthContext";
 import Modal from "../Modal";
 import RatingUpdateForm from "./RatingUpdateForm";
 import Rating from "../Rating";
+import { toast } from "react-hot-toast";
 
 const SearchStores = () => {
   const [pagination, setPagination] = useState({ page: 1, limit: 10 });
   const [stores, setStores] = useState([]);
   const [loading, setLoading] = useState(false);
   const [total, setTotal] = useState({ count: 0, pages: 1 });
-  const [filters, setFilters] = useState({ name: "", email: "", address: "", average_rating: null });
+  const [filters, setFilters] = useState({ name: "", email: "", address: "", average_rating: "" });
   const [sortBy, setSortBy] = useState({ key: "created_at", order: "DESC" });
   const { authState } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
@@ -73,7 +74,7 @@ const SearchStores = () => {
         });
       } catch (error) {
         console.error(error.message);
-        alert("Unable to load stores data: " + error.message);
+        toast.error("Unable to load stores data: " + error.message);
       } finally {
         setLoading(false);
       }
@@ -100,7 +101,7 @@ const SearchStores = () => {
           onChange={(e) => handleFilterChange("address", e.target.value)}
         />
         <Select label={"Rating"} options = {[
-          {label: "Any", value: null},
+          {label: "Any", value: ""},
           {label: "0", value: 0},
           {label: "1", value: 1},
           {label: "2", value: 2},

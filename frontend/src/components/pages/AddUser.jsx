@@ -7,6 +7,7 @@ import Button from "../Button";
 import "../css/Register.css";
 import axios from "axios";
 import Select from "../Select";
+import { toast } from "react-hot-toast";
 
 const AddUser = () => {
   const {
@@ -32,11 +33,11 @@ const AddUser = () => {
         data,
         {withCredentials: true}
       );
-      alert("User added successfully!");
+      toast.success("User added successfully!");
       reset()
     } catch (err) {
       console.error(err);
-      alert("Failed to add user: " + (err.response?.data?.message || ""));
+      toast.error("Failed to add user: " + (err.response?.data?.message || ""));
     }
   };
 

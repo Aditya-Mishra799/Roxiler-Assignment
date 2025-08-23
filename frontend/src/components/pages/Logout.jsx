@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../Loader';
 import { useAuth } from '../../context/AuthContext';
+import { toast } from 'react-hot-toast';
 
 const Logout = () => {
   const [loading, setLoading] = useState(true);
@@ -24,7 +25,7 @@ const Logout = () => {
         reload()
       } catch (err) {
         console.error("Logout failed:", err);
-        alert("Not able to Logout")
+        toast.error("Not able to Logout")
       } 
     };
 

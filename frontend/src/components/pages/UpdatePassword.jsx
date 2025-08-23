@@ -6,6 +6,7 @@ import Button from "../Button";
 import "../css/Register.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 const UpdatePassword = () => {
   const navigate = useNavigate();
@@ -22,19 +23,18 @@ const UpdatePassword = () => {
 
   const onSubmit = async (data) => {
     try {
-        console.log("submitt")
       const res = await axios.post(
         `${import.meta.env.VITE_API_BASE_URL}/auth/update-password`,
         data,
         { withCredentials: true }
       );
-      alert("Updated Password sucessfully")
+      toast.error("Updated Password sucessfully")
       setTimeout(() => {
         navigate("/");
       }, 50);
     } catch (err) {
       console.error(err);
-      alert("Failed to update password: " + (err.response?.data?.message || ""));
+      toast.error("Failed to update password: " + (err.response?.data?.message || ""));
     }
   };
 

@@ -11,13 +11,25 @@ import {
   X,
   StoreIcon,
   User2Icon,
+  Home,
 } from "lucide-react";
 import useWindowWidth from "../../hooks/useWindowWidth";
 
 const Navbar = () => {
-  const {authState} = useAuth();
+  const { authState } = useAuth();
   const windowWidth = useWindowWidth();
+
+  const dashboardLink = {
+    owner: "/owner-dashboard",
+    admin: "/admin-dashboard",
+  };
   const links = [
+    {
+      label: "Home",
+      href: "/",
+      visible: authState.isAuthenticated,
+      Icon: Home,
+    },
     {
       label: "Login",
       href: "/login",
@@ -38,8 +50,10 @@ const Navbar = () => {
     },
     {
       label: "Dashboard",
-      href: "/dashboard",
-      visible: authState.isAuthenticated && authState.user?.role === "admin",
+      href: authState.isAuthenticated
+        ? dashboardLink[authState.user?.role]
+        : "/",
+      visible: authState.isAuthenticated && ["admin", "owner"].includes(authState.user?.role),
       Icon: LayoutDashboard,
     },
     {
@@ -55,30 +69,38 @@ const Navbar = () => {
       Icon: StoreIcon,
     },
     {
-      label: "Users",
+      label: "Search Users",
       href: "/search-users",
       visible: authState.isAuthenticated && authState.user?.role === "admin",
+      Icon: User2Icon,
+    },
+    {
+      label: "Search Stores",
+      href: "/search-stores",
+      visible:
+        authState.isAuthenticated &&
+        ["admin", "user"].includes(authState.user?.role),
       Icon: User2Icon,
     },
   ];
   const [open, setOpen] = useState(false);
   return (
     <div className="navbar">
-        <div className="nav-top">
-          <h3>Menu</h3>
-          {windowWidth < 768 && (
-            <button onClick={() => setOpen(!open)}>
-              {open ? <X /> : <Menu />}
-            </button>
-          )}
-        </div>
-        {(open || windowWidth >= 768) && (
-          <div className="nav-links-cnt">
-            {links.map((link) => (
-              <NavItem {...link} key={link.href} />
-            ))}
-          </div>
+      <div className="nav-top">
+        <h3>Menu</h3>
+        {windowWidth < 768 && (
+          <button onClick={() => setOpen(!open)}>
+            {open ? <X /> : <Menu />}
+          </button>
         )}
+      </div>
+      {(open || windowWidth >= 768) && (
+        <div className="nav-links-cnt">
+          {links.filter((link)=>link.visible).map((link) => (
+          <NavItem {...link} key={link.href} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

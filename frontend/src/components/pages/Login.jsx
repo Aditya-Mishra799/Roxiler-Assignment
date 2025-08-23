@@ -7,6 +7,7 @@ import "../css/Register.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import { toast } from "react-hot-toast";
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -36,7 +37,7 @@ const LoginForm = () => {
       }, 50);
     } catch (err) {
       console.error(err);
-      alert("Failed to login. " + (err.response?.data?.message || ""));
+      toast.error("Failed to login. " + (err.response?.data?.message || ""));
     }
   };
 

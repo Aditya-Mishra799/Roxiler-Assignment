@@ -7,12 +7,14 @@ import AdminDashboard from "./components/pages/AdminDashboard";
 import Home from "./components/pages/Home";
 import Login from "./components/pages/Login";
 import Logout from "./components/pages/Logout";
+import OwnerDashboard from "./components/pages/OwnerDashboard";
 import Register from "./components/pages/Register";
 import SearchStores from "./components/pages/SearchStores";
 import SearchUsers from "./components/pages/SearchUsers";
 import UpdatePassword from "./components/pages/UpdatePassword";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
@@ -79,17 +81,25 @@ function App() {
             }
           />
           <Route
-            path="/dashboard"
+            path="/admin-dashboard"
             element={
               <ProtectedRoute roles={["admin"]}>
                 <AdminDashboard />
               </ProtectedRoute>
             }
           />
-
+          <Route
+            path="/owner-dashboard"
+            element={
+              <ProtectedRoute roles={["owner"]}>
+                <OwnerDashboard />
+              </ProtectedRoute>
+            }
+          />
           <Route path="*" element={<h1>404 Not Found</h1>} />
         </Routes>
       </AuthProvider>
+      <Toaster position="bottom-right" reverseOrder={false} />
     </>
   );
 }

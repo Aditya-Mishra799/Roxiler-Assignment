@@ -7,6 +7,7 @@ import Button from "../Button";
 import "../css/Register.css";
 import axios from "axios";
 import { addStoreValidation } from "../../schemas/storeValidationSchema";
+import { toast } from "react-hot-toast";
 
 const AddStore = () => {
   const {
@@ -44,11 +45,11 @@ const AddStore = () => {
         { withCredentials: true }
       );
 
-      alert("Store and owner added successfully!");
+      toast.success("Store and owner added successfully!");
       reset();
     } catch (err) {
       console.error(err);
-      alert(
+      toast.error(
         "Failed to add store: " + (err.response?.data?.message || "")
       );
     }

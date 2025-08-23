@@ -7,6 +7,7 @@ import Button from "../Button";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../css/Register.css";
+import { toast } from "react-hot-toast";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
@@ -32,11 +33,11 @@ const RegisterForm = () => {
         `${import.meta.env.VITE_API_BASE_URL}/auth/register`,
         data
       );
-      alert("User registered successfully! Please login.");
+      toast.success("User registered successfully! Please login.");
       navigate("/login");
     } catch (err) {
       console.error(err);
-      alert("Failed to register. " + (err.response?.data?.message || ""));
+      toast.error("Failed to register. " + (err.response?.data?.message || ""));
     }
   };
 

@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { toast } from "react-hot-toast";
 import Button from "../Button";
 import Rating from "../Rating";
 
@@ -16,10 +17,10 @@ const RatingUpdateForm = ({ store_id, user_rating, closeModal }) => {
         { withCredentials: true }
       );
       closeModal(true);
-      alert("Rating Updated Sucessfully");
+      toast.success("Rating Updated Sucessfully");
     } catch (err) {
       console.error(err);
-      alert("Failed to update rating");
+      toast.error("Failed to update rating");
     } finally {
       setSubmitting(false);
     }

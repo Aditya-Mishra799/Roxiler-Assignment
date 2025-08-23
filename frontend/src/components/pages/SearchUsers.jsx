@@ -6,6 +6,7 @@ import Button from "../Button";
 import Input from "../Input";
 import Select from "../Select";
 import { useDebounce } from "../../hooks/useDebounce";
+import { toast } from "react-hot-toast";
 
 const SearchUsers = () => {
   const [pagination, setPagination] = useState({
@@ -68,7 +69,7 @@ const SearchUsers = () => {
         });
       } catch (error) {
         console.error(error.message);
-        alert("Unable to load users data: " + error.message);
+        toast.error("Unable to load users data: " + error.message);
       } finally {
         setLoading(false);
       }
