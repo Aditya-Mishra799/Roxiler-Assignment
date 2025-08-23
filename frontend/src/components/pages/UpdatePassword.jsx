@@ -28,7 +28,7 @@ const UpdatePassword = () => {
         data,
         { withCredentials: true }
       );
-      toast.error("Updated Password sucessfully")
+      toast.success("Updated Password sucessfully")
       setTimeout(() => {
         navigate("/");
       }, 50);
