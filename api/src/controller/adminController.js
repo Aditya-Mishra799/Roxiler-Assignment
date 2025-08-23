@@ -109,8 +109,8 @@ export const fetchUsers = async (req, res) => {
     const total = parseInt(countResult.rows[0].count);
     filterValues.push(parseInt(limit), offset);
     const query = `
-    SELECT name, email, role, address, created_at
-    FROM users
+    SELECT users.name, users.email, users.role, users.address, users.created_at, stores.average_rating AS rating
+    FROM users LEFT JOIN stores ON users.id = stores.owner_id
     ${whereClause}
     ${orderByClause}
     LIMIT $${paramIndex++} OFFSET $${paramIndex++};

@@ -61,7 +61,6 @@ const SearchUsers = () => {
             withCredentials: true,
           }
         );
-        console.log(res.data);
         setUsers(res.data?.data || []);
         setTotal({
           count: parseInt(res.data?.total) || 0,
@@ -136,9 +135,13 @@ const SearchUsers = () => {
               </tr>
             </thead>
             <tbody>
-              {users.map(({ address, created_at, name, email, role }) => (
+              {users.map(({ address, created_at, name, email, role, rating  }) => (
                 <tr key={email}>
-                  <td>{name}</td>
+                  <td>
+                    <div>{name}
+                    {rating && <p><strong>Store Rating:</strong> {rating}</p>}
+                    </div>
+                  </td>
                   <td>{email}</td>
                   <td>{role}</td>
                   <td>{address}</td>
