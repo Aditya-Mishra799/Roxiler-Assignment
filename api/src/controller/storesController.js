@@ -137,7 +137,7 @@ export const fetchStoreRatings = async (req, res) => {
   limit = parseInt(limit);
   try {
     const store = await pool.query(
-      `SELECT id FROM stores WHERE owner_id = $1;`,
+      `SELECT id, average_rating FROM stores WHERE owner_id = $1;`,
       [owner_id]
     );
     if (!store.rows[0]) {
@@ -163,7 +163,10 @@ export const fetchStoreRatings = async (req, res) => {
       total,
       page,
       limit,
-      ratings: ratings.rows,
+      data: {
+        ratings: ratings.rows,
+        average_rating: store.rows[0]?.average_rating,
+      },
     });
   } catch (error) {
     console.error(error);
