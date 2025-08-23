@@ -1,4 +1,4 @@
-body{
+body {
   padding-top: 5em;
 }
 .nav-links-cnt {
@@ -11,7 +11,7 @@ body{
   background-color: rgb(30, 199, 232);
   position: fixed;
   width: 100%;
-  top:0;
+  top: 0;
   z-index: 1;
 }
 .nav-top > h3 {
@@ -90,6 +90,10 @@ body{
   color: rgb(11, 141, 176);
   background-color: white;
   border: 2px solid rgb(11, 141, 176);
+}
+.btn.tiny {
+  font-size: 0.8em;
+  font-weight: normal;
 }
 /* Input code */
 

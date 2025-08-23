@@ -8,6 +8,7 @@ import Home from "./components/pages/Home";
 import Login from "./components/pages/Login";
 import Logout from "./components/pages/Logout";
 import Register from "./components/pages/Register";
+import SearchStores from "./components/pages/SearchStores";
 import SearchUsers from "./components/pages/SearchUsers";
 import UpdatePassword from "./components/pages/UpdatePassword";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -66,6 +67,14 @@ function App() {
             element={
               <ProtectedRoute roles={["admin"]}>
                 <SearchUsers />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/search-stores"
+            element={
+              <ProtectedRoute roles={["admin", "user"]}>
+                <SearchStores />
               </ProtectedRoute>
             }
           />

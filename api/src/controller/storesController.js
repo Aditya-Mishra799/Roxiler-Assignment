@@ -12,7 +12,6 @@ export const fetchStores = async (req, res) => {
     owner_id,
   } = req.query;
   try {
-    console.log("Store fetch");
     const filterClauses = [];
     const filterValues = [];
     let paramIndex = 1;
@@ -28,7 +27,7 @@ export const fetchStores = async (req, res) => {
       filterClauses.push(`address ILIKE $${paramIndex++}`);
       filterValues.push(`%${address.trim()}%`);
     }
-    if (average_rating && average_rating <= 5 && average_rating >= 1) {
+    if (average_rating && average_rating <= 5 && average_rating >= 0) {
       filterClauses.push(`FLOOR(average_rating) = $${paramIndex++}`);
       filterValues.push(parseInt(average_rating));
     }
@@ -57,7 +56,9 @@ export const fetchStores = async (req, res) => {
       })
       .filter(Boolean)
       .join(", ");
-    const orderByClause = sortRules ? `ORDER BY ${sortRules}` : "ORDER BY created_at";
+    const orderByClause = sortRules
+      ? `ORDER BY ${sortRules}`
+      : "ORDER BY created_at";
     const offset = (parseInt(page) - 1) * limit;
     const countQuery = `
     SELECT COUNT(*) AS total
@@ -67,10 +68,13 @@ export const fetchStores = async (req, res) => {
     const countResult = await pool.query(countQuery, filterValues);
     const total = parseInt(countResult.rows[0].total);
 
-    filterValues.push(parseInt(limit), offset);
+    filterValues.push(req.user.id, parseInt(limit), offset);
     const query = `
-      SELECT id, name, email, average_rating, address, created_at, owner_id
-      FROM stores
+      SELECT stores.id, stores.name, stores.email,
+      stores.average_rating, stores.address,
+      stores.created_at, stores.owner_id, ratings.rating AS user_rating
+
+      FROM stores LEFT JOIN ratings ON stores.id = ratings.store_id AND ratings.user_id =  $${paramIndex++}
       ${whereClause}
       ${orderByClause}
       LIMIT $${paramIndex++} OFFSET $${paramIndex++};
@@ -82,7 +86,7 @@ export const fetchStores = async (req, res) => {
       page: parseInt(page),
       limit: parseInt(limit),
       totalPages: Math.ceil(total / parseInt(limit)),
-      stores: result.rows,
+      data: result.rows,
     });
   } catch (error) {
     console.error(error);
