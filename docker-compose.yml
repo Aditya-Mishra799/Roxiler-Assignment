@@ -1,4 +1,24 @@
 services:
+  api:
+    build: ./api
+    container_name: api
+    ports:
+      - '3000:3000'
+    depends_on:
+      - db
+    env_file:
+      - ./api/.env
+
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    ports:
+      - '5173:5173'
+    depends_on:
+      - api
+    env_file:
+      - ./frontend/.env
+
   db:
     image: postgres:17
     container_name: postgres
