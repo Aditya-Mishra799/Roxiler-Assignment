@@ -1,6 +1,4 @@
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema } from "../../schemas/userValidation"; // <-- your schema file
 import Input from "../Input";
 import Button from "../Button";
 import "../css/Register.css";
@@ -17,7 +15,6 @@ const LoginForm = () => {
     handleSubmit,
     formState: { isSubmitting },
   } = useForm({
-    resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
       password: "",

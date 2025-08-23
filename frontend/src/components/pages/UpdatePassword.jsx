@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {  updatePasswordSchema } from "../../schemas/userValidation"; // <-- your schema file
+import {  updatePasswordSchema } from "../../schemas/userValidation"; 
 import Input from "../Input";
 import Button from "../Button";
 import "../css/Register.css";

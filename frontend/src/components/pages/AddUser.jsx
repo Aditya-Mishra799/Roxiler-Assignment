@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { userSchema } from "../../schemas/userValidation"; // <-- your schema file
+import { userSchema } from "../../schemas/userValidation";
 import Input from "../Input";
 import TextArea from "../TextArea";
 import Button from "../Button";
