@@ -10,8 +10,9 @@ import {
   Menu,
   X,
   StoreIcon,
+  User2Icon,
 } from "lucide-react";
-import useWindowWidth from "../../assets/hooks/useWindowWidth";
+import useWindowWidth from "../../hooks/useWindowWidth";
 
 const Navbar = () => {
   const {authState} = useAuth();
@@ -52,6 +53,12 @@ const Navbar = () => {
       href: "/add-store",
       visible: authState.isAuthenticated && authState.user?.role === "admin",
       Icon: StoreIcon,
+    },
+    {
+      label: "Users",
+      href: "/search-users",
+      visible: authState.isAuthenticated && authState.user?.role === "admin",
+      Icon: User2Icon,
     },
   ];
   const [open, setOpen] = useState(false);

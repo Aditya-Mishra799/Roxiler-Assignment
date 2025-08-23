@@ -61,7 +61,7 @@ export const fetchUsers = async (req, res) => {
     role = "",
     page = 1,
     limit = 10,
-    sortBy = [],
+    sortBy,
   } = req.query;
   try {
     const filterClauses = [];

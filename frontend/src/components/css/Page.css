@@ -1,0 +1,113 @@
+.basic-table {
+    width: 100%;
+    border-collapse: separate; 
+    border-spacing: 0;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    max-width: fit-content;
+  }
+  
+  .basic-table th,
+  .basic-table td {
+    padding: 12px 16px;
+    text-align: left;
+  }
+  
+  .basic-table thead {
+    background-color: rgb(17, 175, 207);
+    color: #fff;
+    font-weight: 600;
+    font-size: 14px;
+  }
+  
+  .basic-table tbody tr {
+    background-color: #fff;
+    transition: background-color 0.2s ease;
+  }
+  
+  .basic-table tbody tr:nth-child(even) {
+    background-color: #f5f5f5; 
+  }
+  
+  .basic-table tbody tr:hover {
+    background-color: rgb(220, 245, 250); 
+  }
+  
+  .basic-table td {
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .basic-table thead tr th:first-child {
+    border-top-left-radius: 5px;
+  }
+  .basic-table thead tr th:last-child {
+    border-top-right-radius: 5px;
+  }
+  .basic-table tbody tr:last-child td:first-child {
+    border-bottom-left-radius: 5px;
+  }
+  .basic-table tbody tr:last-child td:last-child {
+    border-bottom-right-radius: 5px;
+  }
+
+  .basic-table th {
+    position: relative; 
+    padding: 12px 16px;
+    text-align: left; 
+    font-weight: 600;
+  }
+  
+  .basic-table th button.sort-arrow {
+    margin-left: 8px;       
+    vertical-align: middle;  
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;     
+    align-items: center;      
+    justify-content: center;  
+    padding: 2px;
+    color: white;
+    transition: transform 0.1s ease-in;
+    font-size: 15px;
+  }
+  .sort-arrow.desc {
+    transform: rotate(180deg);
+  }
+  .basic-page{
+    padding: 2em 1.5em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .controls {
+    display: flex;
+    gap: 0.5em;
+    margin-top: 1em;
+    align-items: center;
+  }
+
+.basic-page h3{
+  margin-bottom: 0.5em;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  background: #f8f9fa;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+}
+
+.filters .input-group,
+.filters .select-group {
+  flex: 1 1 auto;
+  min-width: 150px;
+}

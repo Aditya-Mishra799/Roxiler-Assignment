@@ -1,3 +1,6 @@
+body{
+  padding-top: 5em;
+}
 .nav-links-cnt {
   display: flex;
   flex-direction: column;
@@ -6,6 +9,10 @@
 }
 .navbar {
   background-color: rgb(30, 199, 232);
+  position: fixed;
+  width: 100%;
+  top:0;
+  z-index: 1;
 }
 .nav-top > h3 {
   color: white;
