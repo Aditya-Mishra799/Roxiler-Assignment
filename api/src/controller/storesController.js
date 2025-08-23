@@ -16,23 +16,23 @@ export const fetchStores = async (req, res) => {
     const filterValues = [];
     let paramIndex = 1;
     if (name.trim()) {
-      filterClauses.push(`name ILIKE $${paramIndex++}`);
+      filterClauses.push(`stores.name ILIKE $${paramIndex++}`);
       filterValues.push(`%${name.trim()}%`);
     }
     if (email.trim()) {
-      filterClauses.push(`email ILIKE $${paramIndex++}`);
+      filterClauses.push(`stores.email ILIKE $${paramIndex++}`);
       filterValues.push(`%${email.trim()}%`);
     }
     if (address.trim()) {
-      filterClauses.push(`address ILIKE $${paramIndex++}`);
+      filterClauses.push(`stores.address ILIKE $${paramIndex++}`);
       filterValues.push(`%${address.trim()}%`);
     }
     if (average_rating && average_rating <= 5 && average_rating >= 0) {
-      filterClauses.push(`FLOOR(average_rating) = $${paramIndex++}`);
+      filterClauses.push(`FLOOR(stores.average_rating) = $${paramIndex++}`);
       filterValues.push(parseInt(average_rating));
     }
     if (owner_id) {
-      filterClauses.push(`owner_id = $${paramIndex++}`);
+      filterClauses.push(`stores.owner_id = $${paramIndex++}`);
       filterValues.push(parseInt(owner_id));
     }
     const whereClause = filterClauses.length
@@ -73,7 +73,6 @@ export const fetchStores = async (req, res) => {
       SELECT stores.id, stores.name, stores.email,
       stores.average_rating, stores.address,
       stores.created_at, stores.owner_id, ratings.rating AS user_rating
-
       FROM stores LEFT JOIN ratings ON stores.id = ratings.store_id AND ratings.user_id =  $${paramIndex++}
       ${whereClause}
       ${orderByClause}

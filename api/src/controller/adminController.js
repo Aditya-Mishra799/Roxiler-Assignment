@@ -68,19 +68,19 @@ export const fetchUsers = async (req, res) => {
     const filterValues = [];
     let paramIndex = 1;
     if (name.trim()) {
-      filterClauses.push(`name ILIKE $${paramIndex++}`);
+      filterClauses.push(`users.name ILIKE $${paramIndex++}`);
       filterValues.push(`%${name.trim()}%`);
     }
     if (email.trim()) {
-      filterClauses.push(`email ILIKE $${paramIndex++}`);
+      filterClauses.push(`users.email ILIKE $${paramIndex++}`);
       filterValues.push(`%${email.trim()}%`);
     }
     if (address.trim()) {
-      filterClauses.push(`address ILIKE $${paramIndex++}`);
+      filterClauses.push(`users.address ILIKE $${paramIndex++}`);
       filterValues.push(`%${address.trim()}%`);
     }
     if (role.trim()) {
-      filterClauses.push(`role = $${paramIndex++}`);
+      filterClauses.push(`users.role = $${paramIndex++}`);
       filterValues.push(role.trim());
     }
     const whereClause = filterClauses.length
