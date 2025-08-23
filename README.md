@@ -2,7 +2,8 @@
 # Roxiler Assignment-Ratings App
 
 ## 🛠 Tech Stack
-- **Frontend**: [React.js](https://react.dev/) with [Vite](https://vitejs.dev/), [Tailwind CSS](https://tailwindcss.com/)  
+- **Frontend**: [React.js](https://react.dev/) with [Vite](https://vitejs.dev/)
+
 - **Backend**: [Node.js](https://nodejs.org/) with [Express.js](https://expressjs.com/)  
 - **Database**: [PostgreSQL](https://www.postgresql.org/)  
 - **Authentication & Security**: JSON Web Tokens (JWT), bcrypt 
