@@ -8,18 +8,16 @@
 - **Database**: [PostgreSQL](https://www.postgresql.org/)  
 - **Authentication & Security**: JSON Web Tokens (JWT), bcrypt 
 
----
 
 ## API + Frontend Setup Guide
 
 ### 1. Clone Repository
 
 ```sh
-git clone <your-repo-url>
-cd <your-repo-folder>
+git clone https://github.com/Aditya-Mishra799/Roxiler-Assignment
+cd Roxiler-Assignment
 ```
 
----
 
 ### 2. Environment Files
 
@@ -40,7 +38,7 @@ HOST=localhost
 
 inside **api/.env** instead of `db`.
 
----
+
 
 ### 3. Run with Docker Compose (Recommended)
 
@@ -48,15 +46,14 @@ inside **api/.env** instead of `db`.
 docker compose up --build
 ```
 
----
-
 ### 4. Run without Docker Compose
 
 #### Start Database (Postgres)
-    - add a new database `ratings_app_db`
-    - add new user `roxiler` with password `roxiler`
-    - Run the ./db/initite_db.sql to configure the database
-    - or you may change env variable in ./api/.env as per your db
+
+- Add a new database `ratings_app_db`
+- Add new user `roxiler` with password `roxiler`
+- Run the `./db/initiate_db.sql` to configure the database
+- Or you may change env variable in `./api/.env` as per your db
 
 #### Start API
 
@@ -72,8 +69,8 @@ npm i
 npm run dev
 ```
 
----
-### 5. Aceessing the appilication
+
+### 5. Accessing the appilication
 - At `http://localhost:5173` the react frontend will be running 
 - At `http://localhost:3000` the backend express API will be running
 
