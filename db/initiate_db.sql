@@ -8,8 +8,8 @@ CREATE TABLE users(
     role user_role NOT NULL,
     created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
     updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
-    CHECK(LENGTH(name) BETWEEN 5 AND 60),
-    CHECK(LENGTH(address) BETWEEN 10 AND 400)
+    CHECK(LENGTH(name) BETWEEN 20 AND 60),
+    CHECK(LENGTH(address) <= 400)
 );
 
 CREATE TABLE stores(
@@ -23,7 +23,7 @@ CREATE TABLE stores(
     total_rating INT DEFAULT 0,      
     created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
     updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
-    CHECK(LENGTH(name) BETWEEN 5 AND 60),
+    CHECK(LENGTH(name) BETWEEN 20 AND 60),
     CHECK(LENGTH(address) <= 400)
 );
 
@@ -124,7 +124,7 @@ EXECUTE FUNCTION update_timestamp();
 -- adding a default admin user, PASSWORD = Roxiler@123
 INSERT INTO users (name, email, address, password, role) 
 VALUES (
-  'Roxiler', 
+  'Roxiler Systems, India LTD', 
   'roxiler@roxiler.com', 
   'Room 1234, Plot 567, Maharashtra', 
   '$2b$10$hgF.E5GMZLc6hwq6Z46hb.4758PejWbSCH6mDoVytzbo3pNUzoN02', 
