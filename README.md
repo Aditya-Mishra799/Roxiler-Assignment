@@ -73,6 +73,10 @@ npm run dev
 ### 5. Accessing the appilication
 - At `http://localhost:5173` the react frontend will be running 
 - At `http://localhost:3000` the backend express API will be running
+- Once you open the website you will be redirected to login page
+- Credentials of first admin are, email:`roxiler@roxiler.com` and password:`Roxiler@123`
+- Once you login with these credentials then you can add new users or stores
+- normal users can directly register, by clicking register in Menu
 
 ## API Endpoints
 
