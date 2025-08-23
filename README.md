@@ -1,7 +1,7 @@
 
 # Roxiler Assignment-Ratings App
 
-## Application Demo and Setu Explanation Video
+## Application Demo and Setup Explanation Video
 - Clink on this link to see the demo video [if required] [Demo Video](https://drive.google.com/file/d/1ZV62wk9wTbP1d9V8ypOK-GWxvKYzUchF/view?usp=drive_link)
 
 ## 🛠 Tech Stack
